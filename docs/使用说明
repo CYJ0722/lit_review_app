@@ -1,0 +1,49 @@
+前提说明：我在项目根目录（我自己本地是E:\科研\李老师文献项目），
+1.先在E:\科研\李老师文献项目\.venv\Scripts\Activate.ps1激活虚拟环境，（上传至GitHub后可能会有问题若有问题请大家自己重新创建环境）
+2.虚拟环境安装如下：cd 你自己的目录 创建虚拟环境：python -m venv .venv 激活虚拟环境：.\.venv\Scripts\Activate.ps1
+    每个人的电脑配置不同，以上方法不一定适用，若有问题请大家自己重新创建环境
+3.安装后端依赖：先进入项目代码目录：cd E:\科研\李老师文献项目\lit_review_app 
+   然后安装后端依赖：pip install -r lit_review_app/requirements.txt
+   注意这里可能很慢，可以使用镜像源：pip install -r requirements.txt -i https://pypi.org/simple --trusted-host pypi.org --trusted-host files.pythonhosted.org
+4.安装前端依赖：先进入项目前端目录：cd E:\科研\李老师文献项目\lit_review_app\frontend 
+   然后安装前端依赖：npm install
+5.现在已经完成环境配置。现在需要确保下载好项目必备的elasticserach：https://www.elastic.co/downloads/elasticsearch
+   下载后解压到你自己的目录(注意不能有中文路径，否则会报错，然后一定要记住你自己的路径在哪，后续启动需要用到)，
+   进入你自己解压后的目录（比如cd E:\elasticsearch-9.2.4），运行：.\bin\elasticsearch.bat
+
+到目前为止系统所需配置基本完成，现在需要进行数据导入。数据导入需要确保数据已经准备好，数据准备如下：
+以下 `import_pipeline` 命令必须在**项目根目录**执行（即包含 `lit_review_app` 的那一层，例如 `E:\科研\李老师文献项目`），
+不能在 `lit_review_app` 目录下执行，否则会报 `ModuleNotFoundError: No module named 'lit_review_app'`。
+1.数据准备：第二批文献收集、2023-2025这两个文件确保在根目录下
+2.这里目前对数据的处理需要用到Hugging Face模型。若本机访问 Hugging Face 较慢或超时，在执行导入的终端先设镜像
+    即现在终端执行：$env:HF_ENDPOINT = "https://hf-mirror.com"
+    或者直接本地下载模型（推荐）
+    hugging face模型下载指令如下
+    python -m lit_review_app.data.download_models
+    注意！这里可能很慢，需要耐心等待，建议使用镜像源：python -m lit_review_app.data.download_models -i https://pypi.org/simple --trusted-host pypi.org --trusted-host files.pythonhosted.org
+3.确保elasticserach已经启动，(cd E:\elasticsearch-9.2.4,然后运行：.\bin\elasticsearch.bat)注意这里的命令要单开一个terminal，不要与其他terminal混用
+4.我建议先进行小规模测试，测试指令如下
+    python -m lit_review_app.data.import_pipeline --outdir data/out --db data/papers.db --limit 20
+5.如果小规模测试成功，则进行全量导入，全量导入指令如下（先等我确定效果后再全量）
+    python -m lit_review_app.data.import_pipeline --outdir data/out --db data/papers.db
+注意！目前来看我们的数据预处理做的还不够好，需要进行优化，建议大家先通过小规模测试导入一定数据后自己启动系统观察缺陷，根据缺陷去完善代码
+没完善一次可以重新处理一次数据，然后重新导入，直到数据处理效果满意为止。等到下次开会就可以演示，确认无误后就可以进行全量导入。
+
+
+数据准备完成后需要启动后端和前端。启动后端和前端需要确保环境配置正确，否则会报错。
+1.确保激活了虚拟环境
+2.确保elasticserach已经启动（单开一个terminal）
+3.确保数据已经导入
+4.设置你的API KEY，然后运行下面指令（一起运行）
+    $env:OPENAI_API_KEY = "your API KEY"
+    $env:OPENAI_BASE_URL = "https://open.bigmodel.cn/api/paas/v4"
+    $env:OPENAI_MODEL = "glm-4.7-flash"
+    接着启动本地下载的hugging face模型
+    $env:EMBED_MODEL = "E:\科研\李老师文献项目\models\paraphrase-multilingual-MiniLM-L12-v2"(注意这里路径换成自己的)
+    若是大家试用别的模型有更好的效果，可以替换掉现在的模型，这一步就可以不用做了
+5.启动后端 
+   python -m lit_review_app
+6.启动前端
+    cd E:\科研\李老师文献项目\lit_review_app\frontend
+    npm run dev
+浏览器按提示打开（一般为 `http://localhost:5173`）就可以成功看到前端界面

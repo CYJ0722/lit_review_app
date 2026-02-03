@@ -1,0 +1,279 @@
+/* ===== 仪表盘页面 ===== */
+.dashboard-page {
+    width: 100%;
+    padding-bottom: 32px;
+    animation: fadeIn 0.5s ease;
+  }
+  
+  /* ===== 页面头部 ===== */
+  .page-header {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+  }
+  
+  .page-title-section {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .page-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+  }
+  
+  .page-subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+  
+  /* ===== 筛选表单 ===== */
+  .dashboard-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .form-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-icon {
+    position: absolute;
+    left: 12px;
+    font-size: 15px;
+    pointer-events: none;
+    width: 26px;
+    text-align: center;
+    z-index: 0;
+  }
+  
+  .form-input {
+    min-width: 280px;
+    padding: 12px 16px;
+    border: 2px solid var(--border-light);
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    background: #f8fafc;
+    transition: all var(--transition-fast);
+  }
+  
+  .form-input:focus {
+    border-color: var(--accent-orange);
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+  }
+  
+  .year-range {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .year-range select {
+    min-width: 110px;
+  }
+  
+  .range-separator {
+    color: var(--text-muted);
+  }
+  
+  .dashboard-form .btn {
+    padding: 12px 24px;
+    margin-left: auto;
+  }
+  
+  .loading-spinner-small {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-right: 8px;
+  }
+  
+  /* ===== 加载状态 ===== */
+  .loading-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 40px;
+    background: var(--card-bg);
+    border-radius: var(--border-radius-lg);
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-md);
+  }
+  
+  .loading-spinner {
+    width: 28px;
+    height: 28px;
+    border: 3px solid var(--border-light);
+    border-top-color: var(--accent-orange);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  
+  /* ===== 主体布局 ===== */
+  .dashboard-body {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 24px;
+    align-items: start;
+  }
+  
+  /* ===== 图表区域 ===== */
+  .dashboard-charts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .chart-card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius-lg);
+    padding: 20px 24px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    transition: box-shadow var(--transition-normal);
+  }
+  
+  .chart-card:hover {
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .chart-full {
+    width: 100%;
+  }
+  
+  .chart-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  
+  .chart-title-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .chart-icon {
+    font-size: 20px;
+  }
+  
+  .chart-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+  }
+  
+  .chart-badge {
+    padding: 4px 12px;
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(251, 146, 60, 0.1) 100%);
+    color: var(--accent-orange);
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 20px;
+    border: 1px solid rgba(249, 115, 22, 0.2);
+  }
+  
+  /* ===== AI 助理面板：加长、靠近底部，与各框及底部间距一致 ===== */
+  .dashboard-assistant {
+    position: sticky;
+    top: 32px;
+    background: var(--card-bg);
+    border-radius: var(--border-radius-lg);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    max-height: min(88vh, 920px);
+    min-height: 560px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+  }
+  
+  /* ===== 响应式 ===== */
+  @media (max-width: 1400px) {
+    .dashboard-body {
+      grid-template-columns: 1fr 320px;
+    }
+  }
+  
+  @media (max-width: 1200px) {
+    .dashboard-body {
+      grid-template-columns: 1fr;
+    }
+    
+    .dashboard-assistant {
+      position: static;
+      min-height: 480px;
+      max-height: 75vh;
+    }
+  }
+  
+  @media (max-width: 900px) {
+    .chart-row {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .dashboard-form {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .form-input {
+      min-width: 100%;
+    }
+    
+    .dashboard-form .btn {
+      margin-left: 0;
+      width: 100%;
+    }
+    
+    .year-range {
+      flex-wrap: wrap;
+    }
+    
+    .year-range select {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+  

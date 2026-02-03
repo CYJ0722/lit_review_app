@@ -1,0 +1,19 @@
+# python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+.env
+
+# logs / outputs
+*.log
+output/
+outputs/
+data_cache/
+cache/
+
+# local IDE
+.vscode/
+.idea/
